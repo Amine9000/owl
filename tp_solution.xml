@@ -1,0 +1,203 @@
+<rdf:RDF xmlns="http://exemple.org/famille/"
+    xml:base="http://exemple.org/famille/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+    <!-- Déclaration de la classe Personne -->
+    <owl:Class rdf:about="#Personne">
+        <owl:equivalentClass>
+            <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person" />
+        </owl:equivalentClass>
+    </owl:Class>
+
+
+    <!-- Déclaration de la classe Sexe avec ses individus -->
+    <owl:Class rdf:ID="Sexe" />
+    <owl:NamedIndividual rdf:about="#masculin">
+        <rdf:type rdf:resource="#Sexe" />
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="#feminin">
+        <rdf:type rdf:resource="#Sexe" />
+    </owl:NamedIndividual>
+
+
+    <!-- Déclaration des propriétés nom et sexe -->
+    <owl:DatatypeProperty rdf:about="#nom">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+        <rdfs:domain rdf:resource="#Personne" />
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    </owl:DatatypeProperty>
+
+    <owl:ObjectProperty rdf:about="#sexe">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+        <rdfs:domain rdf:resource="#Personne" />
+        <rdfs:range rdf:resource="#Sexe" />
+    </owl:ObjectProperty>
+
+
+    <!-- Déclaration de la classe Homme comme sous-classe de Personne -->
+    <owl:Class rdf:ID="Homme">
+        <rdfs:subClassOf rdf:resource="#Personne" />
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#sexe" />
+                <owl:hasValue rdf:resource="#masculin" />
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+
+    <!-- Déclaration de la classe Femme comme sous-classe de Personne -->
+    <owl:Class rdf:about="#Femme">
+        <rdfs:subClassOf rdf:resource="#Personne" />
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#sexe" />
+                <owl:hasValue rdf:resource="#feminin" />
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="#Homme" />
+    </owl:Class>
+
+    <!-- Déclaration des individus pour les Hommes et les Femmes -->
+    <Homme rdf:about="#jacques" />
+    <Homme rdf:about="#louis" />
+    <Homme rdf:about="#pierre" />
+    <Homme rdf:about="#gerard" />
+    <Homme rdf:about="#jean" />
+    <Homme rdf:about="#patrick" />
+
+    <Femme rdf:about="#monique" />
+    <Femme rdf:about="#germaine" />
+    <Femme rdf:about="#yvette" />
+    <Femme rdf:about="#therese" />
+    <Femme rdf:about="#muriel" />
+    <Femme rdf:about="#sandrine" />
+    <Femme rdf:about="#astride" />
+
+    <!-- Déclaration des propriétés aEnfant, aFille, aFils, aParent, aMere, aPere, aFrereSoeur -->
+    <owl:ObjectProperty rdf:ID="aEnfant" />
+    <owl:ObjectProperty rdf:ID="aFille">
+        <rdfs:subPropertyOf rdf:resource="#aEnfant" />
+    </owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="aFils">
+        <rdfs:subPropertyOf rdf:resource="#aEnfant" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="aParent">
+        <owl:inverseOf rdf:resource="#aEnfant" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="aMere">
+        <rdfs:subPropertyOf rdf:resource="#aParent" />
+        <rdfs:subPropertyOf rdf:resource="#Femme" />
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="aPere">
+        <rdfs:subPropertyOf rdf:resource="#aParent" />
+        <rdfs:subPropertyOf rdf:resource="#Homme" />
+    </owl:ObjectProperty>
+
+    <owl:Class rdf:ID="Parent">
+        <rdfs:subClassOf rdf:resource="#Personne" />
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#aEnfant" />
+                <owl:minCardinality
+                    rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+
+    <owl:Class rdf:ID="Mere">
+        <owl:intersectionOf rdf:parseType="Collection">
+            <owl:Class rdf:about="#Femme" />
+            <owl:Class rdf:about="#Parent" />
+        </owl:intersectionOf>
+    </owl:Class>
+
+    <owl:Class rdf:ID="Pere">
+        <owl:intersectionOf rdf:parseType="Collection">
+            <owl:Class rdf:about="#Homme" />
+            <owl:Class rdf:about="#Parent" />
+        </owl:intersectionOf>
+    </owl:Class>
+
+
+    <owl:ObjectProperty rdf:ID="aFrereSoeur">
+        <owl:Transitive rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:Transitive>
+        <owl:Symmetric rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:Symmetric>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="aSoeur">
+        <rdfs:subPropertyOf rdf:resource="#aFrereSoeur" />
+        <rdfs:domain rdf:resource="#Femme" />
+        <rdfs:range rdf:resource="#Personne" />
+    </owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="aFrere">
+        <rdfs:subPropertyOf rdf:resource="#aFrereSoeur" />
+        <rdfs:domain rdf:resource="#Homme" />
+        <rdfs:range rdf:resource="#Personne" />
+    </owl:ObjectProperty>
+
+
+    <owl:ObjectProperty rdf:ID="aGrandParent">
+        <rdfs:subPropertyOf rdf:resource="#aParent" />
+        <owl:Transitive rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:Transitive>
+    </owl:ObjectProperty>
+
+    <!-- Déclaration des relations entre les individus -->
+    <rdf:Description rdf:about="#muriel">
+        <aFille rdf:resource="#germaine" />
+        <aFrere rdf:resource="#patrick" />
+        <aSoeur rdf:resource="#sandrine" />
+        <aSoeur rdf:resource="#astride" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#monique">
+        <aFille rdf:resource="#germaine" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#paul">
+        <aFils rdf:resource="#pierre" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#françoise">
+        <aFils rdf:resource="#pierre" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#louis">
+        <aFils rdf:resource="#gerard" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#germaine">
+        <aFils rdf:resource="#gerard" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#pierre">
+        <aFille rdf:resource="#therese" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#yvette">
+        <aFille rdf:resource="#therese" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#gerard">
+        <aFille rdf:resource="#muriel" />
+        <aFille rdf:resource="#sandrine" />
+        <aFils rdf:resource="#patrick" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#therese">
+        <aFille rdf:resource="#muriel" />
+        <aFille rdf:resource="#sandrine" />
+        <aFils rdf:resource="#patrick" />
+        <aFille rdf:resource="#astride" />
+    </rdf:Description>
+
+    <rdf:Description rdf:about="#jean">
+        <aFille rdf:resource="#astride" />
+    </rdf:Description>
+</rdf:RDF>
