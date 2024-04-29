@@ -1,0 +1,28 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:ex="http://example.org/products#">
+
+    <!-- Define Classes -->
+    <owl:Class rdf:about="http://example.org/products#Product" />
+    <owl:Class rdf:about="http://example.org/products#Category" />
+
+    <!-- Define Properties -->
+    <owl:ObjectProperty rdf:about="http://example.org/products#belongsToCategory">
+        <rdfs:domain rdf:resource="http://example.org/products#Product" />
+        <rdfs:range rdf:resource="http://example.org/products#Category" />
+    </owl:ObjectProperty>
+
+    <!-- Define Individuals -->
+    <!-- Products -->
+    <ex:Product rdf:about="http://example.org/products#Product1">
+        <ex:belongsToCategory rdf:resource="http://example.org/products#Category1" />
+    </ex:Product>
+    <ex:Product rdf:about="http://example.org/products#Product2">
+        <ex:belongsToCategory rdf:resource="http://example.org/products#Category2" />
+    </ex:Product>
+
+    <!-- Categories -->
+    <ex:Category rdf:about="http://example.org/products#Category1" />
+    <ex:Category rdf:about="http://example.org/products#Category2" />
+</rdf:RDF>

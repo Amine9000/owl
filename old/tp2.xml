@@ -1,0 +1,74 @@
+<rdfs:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns="http://example.org/products#">
+
+    <!-- Define classes -->
+    <owl:Class rdf:about="#Product" />
+    <owl:Class rdf:about="#Category" />
+
+    <!-- Define properties -->
+    <owl:ObjectProperty rdf:about="#belongsTo">
+        <rdfs:domain rdf:resource="#Product" />
+        <rdfs:range rdf:resource="#Category" />
+    </owl:ObjectProperty>
+    <owl:DatatypeProperty rdf:about="#name" />
+    <owl:DatatypeProperty rdf:about="#price" />
+    <owl:ObjectProperty rdf:about="#hasBrand">
+        <rdfs:domain rdf:resource="#Product" />
+        <rdfs:range rdf:resource="#Brand" />
+    </owl:ObjectProperty>
+
+    <!-- Define individuals -->
+    <Category rdf:about="#Electronics" />
+    <Category rdf:about="#Clothing" />
+    <Category rdf:about="#Books" />
+    <Category rdf:about="#Furniture" />
+
+    <Product rdf:about="#Laptop">
+        <belongsTo rdf:resource="#Electronics" />
+        <name>Laptop</name>
+        <price>1000</price>
+        <hasBrand>Lenovo</hasBrand>
+    </Product>
+
+    <Product rdf:about="#Smartphone">
+        <belongsTo rdf:resource="#Electronics" />
+        <name>Smartphone</name>
+        <price>800</price>
+        <hasBrand>Apple</hasBrand>
+    </Product>
+
+    <Product rdf:about="#TShirt">
+        <belongsTo rdf:resource="#Clothing" />
+        <name>T-Shirt</name>
+        <price>20</price>
+        <hasBrand>Adidas</hasBrand>
+    </Product>
+
+    <Product rdf:about="#Book">
+        <belongsTo rdf:resource="#Books" />
+        <name>Book</name>
+        <price>15</price>
+        <hasBrand>Random House</hasBrand>
+    </Product>
+
+    <Product rdf:about="#Table">
+        <belongsTo rdf:resource="#Furniture" />
+        <name>Table</name>
+        <price>200</price>
+        <hasBrand>IKEA</hasBrand>
+    </Product>
+
+    <!-- Define brand class -->
+    <owl:Class rdf:about="#Brand" />
+
+    <!-- Define individuals for brands -->
+    <Brand rdf:about="#Apple" />
+    <Brand rdf:about="#Lenovo" />
+    <Brand rdf:about="#Adidas" />
+    <Brand rdf:about="#RandomHouse" />
+    <Brand rdf:about="#IKEA" />
+
+</rdfs:RDF>

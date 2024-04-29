@@ -1,12 +1,9 @@
 <rdf:RDF xmlns="http://exemple.org/famille/"
-    xml:base="http://exemple.org/famille/"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:owl="http://www.w3.org/2002/07/owl#"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    xmlns:foaf="http://xmlns.com/foaf/0.1/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
 
-    <!-- Déclaration de la classe Personne -->
+
     <owl:Class rdf:about="#Personne">
         <owl:equivalentClass>
             <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person" />
@@ -14,7 +11,6 @@
     </owl:Class>
 
 
-    <!-- Déclaration de la classe Sexe avec ses individus -->
     <owl:Class rdf:ID="Sexe" />
     <owl:NamedIndividual rdf:about="#masculin">
         <rdf:type rdf:resource="#Sexe" />
@@ -24,7 +20,6 @@
     </owl:NamedIndividual>
 
 
-    <!-- Déclaration des propriétés nom et sexe -->
     <owl:DatatypeProperty rdf:about="#nom">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
         <rdfs:domain rdf:resource="#Personne" />
@@ -38,7 +33,6 @@
     </owl:ObjectProperty>
 
 
-    <!-- Déclaration de la classe Homme comme sous-classe de Personne -->
     <owl:Class rdf:ID="Homme">
         <rdfs:subClassOf rdf:resource="#Personne" />
         <owl:equivalentClass>
@@ -49,7 +43,7 @@
         </owl:equivalentClass>
     </owl:Class>
 
-    <!-- Déclaration de la classe Femme comme sous-classe de Personne -->
+
     <owl:Class rdf:about="#Femme">
         <rdfs:subClassOf rdf:resource="#Personne" />
         <owl:equivalentClass>
@@ -61,7 +55,7 @@
         <owl:disjointWith rdf:resource="#Homme" />
     </owl:Class>
 
-    <!-- Déclaration des individus pour les Hommes et les Femmes -->
+
     <Homme rdf:about="#jacques" />
     <Homme rdf:about="#louis" />
     <Homme rdf:about="#pierre" />
@@ -77,7 +71,6 @@
     <Femme rdf:about="#sandrine" />
     <Femme rdf:about="#astride" />
 
-    <!-- Déclaration des propriétés aEnfant, aFille, aFils, aParent, aMere, aPere, aFrereSoeur -->
     <owl:ObjectProperty rdf:ID="aEnfant" />
     <owl:ObjectProperty rdf:ID="aFille">
         <rdfs:subPropertyOf rdf:resource="#aEnfant" />
